@@ -1,9 +1,10 @@
-<div class="w-full overflow-x-auto lg:text-base text-sm">
+<div class="w-full overflow-x-auto lg:text-base text-sm h-min-500">
     <table class="table-auto w-full min-w-max">
         <thead>
             <tr class="bg-cinza-200 text-preto">
                 <th class="px-4 py-2 font-medium">Place</th>
                 <th class="px-4 py-2 font-medium">State</th>
+                <th class="px-4 py-2 font-medium">Slug</th>
                 <th class="px-4 py-2 font-medium">Created at</th>
                 <th class="px-4 py-2 font-medium">Last update</th>
                 <th class="px-4 py-2 font-medium">Actions</th>
@@ -14,13 +15,14 @@
             tabindex="0"
             class="border-t border-b border-cinza-200 text-preto text-center
               hover:bg-cinza-100 transition-colors duration-300" *ngFor="let item of items">
-                <td class="px-4 py-2">{{ item.place }}</td>
+                <td class="px-4 py-2">{{ item.name }}</td>
                 <td class="px-4 py-2">{{ item.state }}</td>
-                <td class="px-4 py-2">{{ item.created }}</td>
-                <td class="px-4 py-2">{{ item.updated }}</td>
+                <td class="px-4 py-2">{{ item.slug }}</td>
+                <td class="px-4 py-2">{{ item.createdAt }}</td>
+                <td class="px-4 py-2">{{ item.updatedAt }}</td>
                 <td class="px-5 py-2 w-1 whitespace-nowrap">
                     <div class="flex gap-6">
-                        <button (click)="openEditModal(item.place, item.state, item.id)"
+                        <button (click)="openEditModal(item.name, item.state, item.id)"
                         class="focus:bg-sky-400 focus:text-white
                         hover:scale-105 transition duration-300 ease-in-out hover:text-sky-400
                         text-cinza-300 bg-white p-1 w-auto flex items-center shadow-md justify-center border border-cinza-200 rounded-sm">

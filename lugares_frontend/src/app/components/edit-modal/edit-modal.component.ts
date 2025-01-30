@@ -19,7 +19,9 @@ export class EditModalComponent {
   @Input() state: string = "";
   @Input() id: string = "";
 
-  
+  editPlace(){
+    this.close.emit()
+  }
 
 
 }

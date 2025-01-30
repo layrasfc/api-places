@@ -21,4 +21,8 @@ export class DeleteModalComponent {
     }
   }
 
+  deletePlace(){
+    this.close.emit()
+  }
+
 }

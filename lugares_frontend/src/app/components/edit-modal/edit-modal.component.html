@@ -6,7 +6,6 @@
     <h2 class="text-lg font-bold">Update place</h2>
     <app-line></app-line>
 
-
     <form action="" class="grid gap-5 m-10">
       <p class="flex flex-col gap-2">
         <label for="place" class="font-semibold">Place</label>
@@ -22,7 +21,7 @@
       </p>
 
       <p class="flex flex-row gap-2">
-        <button class="bg-sky-500 text-white font-semibold px-4 py-1 border rounded-sm
+        <button (click)="editPlace()" class="bg-sky-500 text-white font-semibold px-4 py-1 border rounded-sm
         hover:bg-white hover:text-sky-500 transition duration-300 ease-in-out
         shadow-">Save</button>
         <button (click)="close.emit()" 

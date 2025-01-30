@@ -2,6 +2,8 @@ import { Component, EventEmitter, Output, signal } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { EditModalComponent } from '../edit-modal/edit-modal.component';
 import { DeleteModalComponent } from '../delete-modal/delete-modal.component';
+import { HttpClient } from '@angular/common/http';
+import { format } from 'date-fns';
 
 @Component({
   selector: 'app-table',
@@ -10,24 +12,33 @@ import { DeleteModalComponent } from '../delete-modal/delete-modal.component';
   styleUrl: './table.component.css'
 })
 export class TableComponent {
-  items: any[] = [];
+  items: any[] = []; // Array de itens
 
-  constructor() {
-    this.loadData(); // Carregar os dados na inicialização
+  constructor(private http: HttpClient) { } // Injetar HttpClient
+
+  ngOnInit(): void {
+    this.loadData(); // Carregar dados ao inicializar o componente
   }
 
-  loadData(){
-    this.items = [
-    { id: 1, place: "Hortolândia", state: "São Paulo", created: "11/02/2024", updated: "11/02/2024 - 09h30" },
-    { id: 2, place: "Campinas", state: "São Paulo", created: "12/02/2024", updated: "12/02/2024 - 09h30" },
-    { id: 3, place: "Rio de Janeiro", state: "Rio de Janeiro", created: "13/02/2024", updated: "13/02/2024 - 09h30" },
-    { id: 4, place: "Belo Horizonte", state: "Minas Gerais", created: "14/02/2024", updated: "14/02/2024 - 09h30" },
-    { id: 5, place: "Curitiba", state: "Paraná", created: "15/02/2024", updated: "15/02/2024 - 09h30" },
-    { id: 6, place: "Salvador", state: "Bahia", created: "16/02/2024", updated: "16/02/2024 - 09h30" },
-    { id: 7, place: "Fortaleza", state: "Ceará", created: "17/02/2024", updated: "17/02/2024 - 09h30" },
-    { id: 8, place: "Manaus", state: "Amazonas", created: "18/02/2024", updated: "18/02/2024 - 09h30" }
-];}
+  loadData() {
+    this.http.get<any[]>('http://localhost:8080/places') // Fazer a requisição para o backend
+      .subscribe({
+        next: (data) => {
+          console.log(data);  // Verifica os dados no console
+          
+          this.items = data.map(item => {
+            item.createdAt = format(new Date(item.createdAt), 'dd/MM/yyyy');
 
+            item.updatedAt = format(new Date(item.updatedAt), 'dd/MM/yyyy - HH:mm');
+            
+            return item;
+          });
+        },
+        error: (err) => {
+          console.error('Erro ao carregar dados:', err); // Lidar com erros
+        }
+      });
+    }
 
   // Edit Modal config
   isEditModalOpen = signal(false);

@@ -1,9 +1,10 @@
-import { Component, EventEmitter, Output, ViewChild } from '@angular/core';
+import { Component, EventEmitter, Output, signal, ViewChild } from '@angular/core';
 import { TableComponent } from '../../components/table/table.component';
 import { BaseLayoutComponent } from '../../shared/base-layout/base-layout.component';
 import { SearchComponent } from '../../components/search/search.component';
-import { PagesComponent } from '../../components/pages/pages.component';
 import { LineComponent } from '../../components/line/line.component';
+import { HttpClientModule } from '@angular/common/http';
+import { AddModalComponent } from '../../components/add-modal/add-modal.component';
 
 @Component({
   selector: 'app-home',
@@ -11,18 +12,23 @@ import { LineComponent } from '../../components/line/line.component';
     BaseLayoutComponent,
     TableComponent,
     SearchComponent,
-    PagesComponent,
-    LineComponent],
+    LineComponent,
+    HttpClientModule,
+    AddModalComponent],
   templateUrl: './home.component.html',
   styleUrl: './home.component.css'
 })
 export class HomeComponent {
-  @ViewChild(TableComponent) tableComponent!: TableComponent;
 
-  refreshTable() {
-    if (this.tableComponent) {
-      this.tableComponent.loadData(); // Chama o método de recarga da tabela
+  isAddModalOpen = signal(false);
+  
+  openAddModal() {
+
+      this.isAddModalOpen.update(state => !state);
     }
-  }
+  
+    closeAddModal() {
+      this.isAddModalOpen.set(false);
+    }
   
 }
