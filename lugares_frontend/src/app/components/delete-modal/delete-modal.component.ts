@@ -12,6 +12,8 @@ export class DeleteModalComponent {
   @Input() isOpen: Signal<boolean> = signal(false);
   @Output() close = new EventEmitter<void>();
 
+  @Input() id: string = "";
+
   closeModalOutsideClick(event: MouseEvent) {
     const targetElement = event.target as HTMLElement;
     if (targetElement.classList.contains('fixed')) {
